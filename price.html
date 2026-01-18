@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ElectroWorld | Electronics Store</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f1f3f6;
+}
+
+/* Navbar */
+.navbar {
+    background: #2874f0;
+    padding: 12px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.logo {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.search-bar {
+    flex: 1;
+    max-width: 500px;
+    margin: 0 30px;
+    position: relative;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 10px 45px 10px 15px;
+    border: none;
+    border-radius: 2px;
+    font-size: 14px;
+}
+
+.search-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    background: white;
+    border: none;
+    padding: 0 15px;
+    cursor: pointer;
+    color: #2874f0;
+}
+
+.nav-links {
+    display: flex;
+    gap: 25px;
+    list-style: none;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.cart-badge {
+    background: #ff6161;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+/* Main Container */
+.main-container {
+    max-width: 1400px;
+    margin: 20px auto;
+    display: flex;
+    gap: 15px;
+    padding: 0 20px;
+}
+
+/* Sidebar Filter */
+.sidebar {
+    width: 260px;
+    background: white;
+    padding: 20px 15px;
+    height: fit-content;
+    position: sticky;
+    top: 20px;
+}
+
+.filter-section {
+    margin-bottom: 25px;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 20px;
+}
+
+.filter-section:last-child {
+    border-bottom: none;
+}
+
+.filter-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.filter-option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.filter-option input {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.filter-option label {
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+}
+
+.price-range {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.price-range input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    font-size: 13px;
+}
+
+/* Product Section */
+.product-section {
+    flex: 1;
+}
+
+.sort-bar {
+    background: white;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.result-count {
+    font-size: 14px;
+    color: #666;
+}
+
+.sort-options {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sort-options select {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* Product Grid */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 15px;
+}
+
+.product-card {
+    background: white;
+    padding: 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.product-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
+}
+
+.discount-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: #ff6161;
+    color: white;
+    padding: 4px 8px;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 2px;
+}
+
+.wishlist-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.wishlist-btn:hover {
+    background: #ff6161;
+    color: white;
+    border-color: #ff6161;
+}
+
+.wishlist-btn.active {
+    background: #ff6161;
+    color: white;
+    border-color: #ff6161;
+}
+
+.product-image {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+    margin-bottom: 12px;
+}
+
+.product-name {
+    font-size: 15px;
+    color: #212121;
+    margin-bottom: 8px;
+    font-weight: 500;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.product-rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 8px;
+}
+
+.stars {
+    background: #388e3c;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.rating-count {
+    font-size: 12px;
+    color: #878787;
+}
+
+.product-price {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.current-price {
+    font-size: 20px;
+    font-weight: 600;
+    color: #212121;
+}
+
+.original-price {
+    font-size: 14px;
+    color: #878787;
+    text-decoration: line-through;
+}
+
+.discount-percent {
+    font-size: 13px;
+    color: #388e3c;
+    font-weight: 500;
+}
+
+.product-features {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 12px;
+}
+
+.add-to-cart {
+    width: 100%;
+    padding: 10px;
+    background: #ff9f00;
+    color: white;
+    border: none;
+    border-radius: 2px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.add-to-cart:hover {
+    background: #e68900;
+}
+
+/* Cart Notification */
+.cart-notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #388e3c;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    display: none;
+    animation: slideIn 0.3s;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.cart-notification.show {
+    display: block;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .main-container {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 100%;
+        position: static;
+    }
+    
+    .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 10px;
+    }
+    
+    .search-bar {
+        margin: 0 15px;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="logo">ElectroWorld</div>
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search for products, brands and more">
+            <button class="search-btn">🔍</button>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#">
+                Cart
+                <span class="cart-badge" id="cartCount">0</span>
+            </a></li>
+            <li><a href="login.html">Login</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Main Container -->
+<div class="main-container">
+    <!-- Sidebar Filters -->
+    <aside class="sidebar">
+        <div class="filter-section">
+            <div class="filter-title">Categories</div>
+            <div class="filter-option">
+                <input type="checkbox" id="smartphones" value="smartphone">
+                <label for="smartphones">Smartphones</label>
+            </div>
+            <div class="filter-option">
+                <input type="checkbox" id="laptops" value="laptop">
+                <label for="laptops">Laptops</label>
+            </div>
+            <div class="filter-option">
+                <input type="checkbox" id="smartwatches" value="smartwatch">
+                <label for="smartwatches">Smartwatches</label>
+            </div>
+            <div class="filter-option">
+                <input type="checkbox" id="tablets" value="tablet">
+                <label for="tablets">Tablets</label>
+            </div>
+        </div>
+
+        <div class="filter-section">
+            <div class="filter-title">Price Range</div>
+            <div class="price-range">
+                <input type="number" id="minPrice" placeholder="Min" value="0">
+                <input type="number" id="maxPrice" placeholder="Max" value="150000">
+            </div>
+        </div>
+
+        <div class="filter-section">
+            <div class="filter-title">Brand</div>
+            <div class="filter-option">
+                <input type="checkbox" id="samsung" value="Samsung">
+                <label for="samsung">Samsung</label>
+            </div>
+            <div class="filter-option">
+                <input type="checkbox" id="apple" value="Apple">
+                <label for="apple">Apple</label>
+            </div>
+            <div class="filter-option">
+                <input type="checkbox" id="google" value="Google">
+                <label for="google">Google</label>
+            </div>
+            <div class="filter-option">
+                <input type="checkbox" id="asus" value="ASUS">
+                <label for="asus">ASUS</label>
+            </div>
+            <div class="filter-option">
+                <input type="checkbox" id="noise" value="Noise">
+                <label for="noise">Noise</label>
+            </div>
+        </div>
+
+        <div class="filter-section">
+            <div class="filter-title">Rating</div>
+            <div class="filter-option">
+                <input type="checkbox" id="rating4" value="4">
+                <label for="rating4">4★ & above</label>
+            </div>
+            <div class="filter-option">
+                <input type="checkbox" id="rating3" value="3">
+                <label for="rating3">3★ & above</label>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Product Section -->
+    <main class="product-section">
+        <div class="sort-bar">
+            <div class="result-count">Showing <span id="productCount">12</span> products</div>
+            <div class="sort-options">
+                <label>Sort By:</label>
+                <select id="sortSelect">
+                    <option value="popularity">Popularity</option>
+                    <option value="priceLow">Price: Low to High</option>
+                    <option value="priceHigh">Price: High to Low</option>
+                    <option value="rating">Rating</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="product-grid" id="productGrid">
+            <!-- Products will be inserted here by JavaScript -->
+        </div>
+    </main>
+</div>
+
+<!-- Cart Notification -->
+<div class="cart-notification" id="cartNotification">
+    Item added to cart!
+</div>
+
+<script>
+// Product Data
+const products = [
+    {
+        id: 1,
+        name: "Samsung Galaxy S24 Ultra 5G",
+        category: "smartphone",
+        brand: "Samsung",
+        price: 124999,
+        originalPrice: 144999,
+        discount: 14,
+        rating: 4.6,
+        reviews: 2847,
+        features: "200MP Camera, Snapdragon 8 Gen 3, 12GB RAM",
+        image: "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=400&h=300&fit=crop"
+    },
+    {
+        id: 2,
+        name: "Apple iPhone 15 Pro Max",
+        category: "smartphone",
+        brand: "Apple",
+        price: 159900,
+        originalPrice: 179900,
+        discount: 11,
+        rating: 4.8,
+        reviews: 5234,
+        features: "A17 Pro, 256GB, Titanium Design",
+        image: "https://images.unsplash.com/photo-1632661674596-df8be070a5c5?w=400&h=300&fit=crop"
+    },
+    {
+        id: 3,
+        name: "Google Pixel 8 Pro",
+        category: "smartphone",
+        brand: "Google",
+        price: 89999,
+        originalPrice: 106999,
+        discount: 16,
+        rating: 4.5,
+        reviews: 1823,
+        features: "Tensor G3, 50MP Camera, AI Features",
+        image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400&h=300&fit=crop"
+    },
+    {
+        id: 4,
+        name: "ASUS Zenbook Duo",
+        category: "laptop",
+        brand: "ASUS",
+        price: 112000,
+        originalPrice: 135000,
+        discount: 17,
+        rating: 4.7,
+        reviews: 934,
+        features: "Dual 14' OLED, Intel Core Ultra 9, 32GB RAM",
+        image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=300&fit=crop"
+    },
+    {
+        id: 5,
+        name: "MacBook Pro 16' M3 Pro",
+        category: "laptop",
+        brand: "Apple",
+        price: 249900,
+        originalPrice: 274900,
+        discount: 9,
+        rating: 4.9,
+        reviews: 3421,
+        features: "M3 Pro, 36GB RAM, 512GB SSD",
+        image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&h=300&fit=crop"
+    },
+    {
+        id: 6,
+        name: "Dell XPS 15",
+        category: "laptop",
+        brand: "Dell",
+        price: 145999,
+        originalPrice: 169999,
+        discount: 14,
+        rating: 4.6,
+        reviews: 1567,
+        features: "13th Gen i7, RTX 4060, 16GB RAM",
+        image: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=400&h=300&fit=crop"
+    },
+    {
+        id: 7,
+        name: "Noise Endeavour Pro",
+        category: "smartwatch",
+        brand: "Noise",
+        price: 9499,
+        originalPrice: 14999,
+        discount: 37,
+        rating: 4.3,
+        reviews: 8934,
+        features: "AMOLED, GPS, 100+ Sports Modes",
+        image: "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=400&h=300&fit=crop"
+    },
+    {
+        id: 8,
+        name: "Apple Watch Series 9",
+        category: "smartwatch",
+        brand: "Apple",
+        price: 45900,
+        originalPrice: 52900,
+        discount: 13,
+        rating: 4.8,
+        reviews: 4523,
+        features: "S9 Chip, Always-On Display, ECG",
+        image: "https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?w=400&h=300&fit=crop"
+    },
+    {
+        id: 9,
+        name: "Samsung Galaxy Watch 6",
+        category: "smartwatch",
+        brand: "Samsung",
+        price: 27999,
+        originalPrice: 35999,
+        discount: 22,
+        rating: 4.5,
+        reviews: 2134,
+        features: "AMOLED, Sleep Tracking, 40mm",
+        image: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=400&h=300&fit=crop"
+    },
+    {
+        id: 10,
+        name: "Samsung Galaxy Tab S9",
+        category: "tablet",
+        brand: "Samsung",
+        price: 76999,
+        originalPrice: 84999,
+        discount: 9,
+        rating: 4.6,
+        reviews: 1234,
+        features: "11' AMOLED, Snapdragon 8 Gen 2, S Pen",
+        image: "https://images.unsplash.com/photo-1561154464-82e9adf32764?w=400&h=300&fit=crop"
+    },
+    {
+        id: 11,
+        name: "iPad Pro 12.9'",
+        category: "tablet",
+        brand: "Apple",
+        price: 109900,
+        originalPrice: 124900,
+        discount: 12,
+        rating: 4.9,
+        reviews: 3876,
+        features: "M2 Chip, Liquid Retina XDR, 256GB",
+        image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400&h=300&fit=crop"
+    },
+    {
+        id: 12,
+        name: "HP Pavilion 15",
+        category: "laptop",
+        brand: "HP",
+        price: 62499,
+        originalPrice: 74999,
+        discount: 17,
+        rating: 4.4,
+        reviews: 2876,
+        features: "12th Gen i5, 16GB RAM, 512GB SSD",
+        image: "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=400&h=300&fit=crop"
+    }
+];
+
+let cart = [];
+let filteredProducts = [...products];
+
+// Initialize
+function init() {
+    renderProducts(filteredProducts);
+    setupEventListeners();
+}
+
+// Render Products
+function renderProducts(productsToRender) {
+    const grid = document.getElementById('productGrid');
+    grid.innerHTML = '';
+    
+    productsToRender.forEach(product => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.innerHTML = `
+            <span class="discount-badge">${product.discount}% OFF</span>
+            <button class="wishlist-btn" onclick="toggleWishlist(event, ${product.id})">♡</button>
+            <img src="${product.image}" alt="${product.name}" class="product-image">
+            <div class="product-name">${product.name}</div>
+            <div class="product-rating">
+                <span class="stars">★ ${product.rating}</span>
+                <span class="rating-count">(${product.reviews.toLocaleString()})</span>
+            </div>
+            <div class="product-price">
+                <span class="current-price">₹${product.price.toLocaleString()}</span>
+                <span class="original-price">₹${product.originalPrice.toLocaleString()}</span>
+                <span class="discount-percent">${product.discount}% off</span>
+            </div>
+            <div class="product-features">${product.features}</div>
+            <button class="add-to-cart" onclick="addToCart(${product.id})">Add to Cart</button>
+        `;
+        grid.appendChild(card);
+    });
+    
+    document.getElementById('productCount').textContent = productsToRender.length;
+}
+
+// Add to Cart
+function addToCart(productId) {
+    const product = products.find(p => p.id === productId);
+    cart.push(product);
+    
+    // Update cart count
+    document.getElementById('cartCount').textContent = cart.length;
+    
+    // Show notification
+    const notification = document.getElementById('cartNotification');
+    notification.classList.add('show');
+    setTimeout(() => {
+        notification.classList.remove('show');
+    }, 2000);
+}
+
+// Toggle Wishlist
+function toggleWishlist(event, productId) {
+    event.stopPropagation();
+    const btn = event.currentTarget;
+    btn.classList.toggle('active');
+    btn.innerHTML = btn.classList.contains('active') ? '♥' : '♡';
+}
+
+// Setup Event Listeners
+function setupEventListeners() {
+    // Search
+    document.getElementById('searchInput').addEventListener('input', filterProducts);
+    
+    // Sort
+    document.getElementById('sortSelect').addEventListener('change', sortProducts);
+    
+    // Category filters
+    document.querySelectorAll('.filter-option input[type="checkbox"]').forEach(checkbox => {
+        checkbox.addEventListener('change', filterProducts);
+    });
+    
+    // Price range
+    document.getElementById('minPrice').addEventListener('input', filterProducts);
+    document.getElementById('maxPrice').addEventListener('input', filterProducts);
+}
+
+// Filter Products
+function filterProducts() {
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    const minPrice = parseInt(document.getElementById('minPrice').value) || 0;
+    const maxPrice = parseInt(document.getElementById('maxPrice').value) || Infinity;
+    
+    // Get selected categories
+    const selectedCategories = Array.from(
+        document.querySelectorAll('#smartphones, #laptops, #smartwatches, #tablets')
+    ).filter(cb => cb.checked).map(cb => cb.value);
+    
+    // Get selected brands
+    const selectedBrands = Array.from(
+        document.querySelectorAll('#samsung, #apple, #google, #asus, #noise')
+    ).filter(cb => cb.checked).map(cb => cb.value);
+    
+    // Get selected ratings
+    const selectedRatings = Array.from(
+        document.querySelectorAll('#rating4, #rating3')
+    ).filter(cb => cb.checked).map(cb => parseFloat(cb.value));
+    
+    filteredProducts = products.filter(product => {
+        const matchesSearch = product.name.toLowerCase().includes(searchTerm) ||
+                            product.features.toLowerCase().includes(searchTerm);
+        const matchesPrice = product.price >= minPrice && product.price <= maxPrice;
+        const matchesCategory = selectedCategories.length === 0 || 
+                              selectedCategories.includes(product.category);
+        const matchesBrand = selectedBrands.length === 0 || 
+                           selectedBrands.includes(product.brand);
+        const matchesRating = selectedRatings.length === 0 || 
+                            selectedRatings.some(rating => product.rating >= rating);
+        
+        return matchesSearch && matchesPrice && matchesCategory && 
+               matchesBrand && matchesRating;
+    });
+    
+    renderProducts(filteredProducts);
+}
+
+// Sort Products
+function sortProducts() {
+    const sortValue = document.getElementById('sortSelect').value;
+    
+    switch(sortValue) {
+        case 'priceLow':
+            filteredProducts.sort((a, b) => a.price - b.price);
+            break;
+        case 'priceHigh':
+            filteredProducts.sort((a, b) => b.price - a.price);
+            break;
+        case 'rating':
+            filteredProducts.sort((a, b) => b.rating - a.rating);
+            break;
+        default:
+            filteredProducts.sort((a, b) => b.reviews - a.reviews);
+    }
+    
+    renderProducts(filteredProducts);
+}
+
+// Initialize on page load
+init();
+</script>
+
+</body>
+</html>

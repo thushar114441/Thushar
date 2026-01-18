@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ElectroWorld - Your Electronics Superstore</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f1f3f6;
+}
+
+/* Navbar */
+.navbar {
+    background: #2874f0;
+    padding: 12px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    gap: 30px;
+}
+
+.logo {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.logo span {
+    color: #ffe500;
+}
+
+.search-bar {
+    flex: 1;
+    max-width: 600px;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 2px;
+    font-size: 14px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #ffe500;
+}
+
+.cart-btn {
+    background: white;
+    color: #2874f0;
+    padding: 8px 20px;
+    border-radius: 2px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.2s;
+}
+
+.cart-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Hero Slider */
+.hero-slider {
+    max-width: 1400px;
+    margin: 20px auto;
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+    height: 400px;
+}
+
+.slider-container {
+    display: flex;
+    transition: transform 0.5s ease;
+    height: 100%;
+}
+
+.slide {
+    min-width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.slide:nth-child(2) {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.slide:nth-child(3) {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.slide-content {
+    text-align: center;
+    color: white;
+    padding: 40px;
+}
+
+.slide-content h2 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.slide-content p {
+    font-size: 24px;
+    margin-bottom: 30px;
+}
+
+.shop-now-btn {
+    background: white;
+    color: #333;
+    padding: 15px 40px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.shop-now-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.slider-nav {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+}
+
+.slider-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.5);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.slider-dot.active {
+    background: white;
+    width: 30px;
+    border-radius: 6px;
+}
+
+/* Categories */
+.categories {
+    max-width: 1400px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.section-title {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+}
+
+.category-card {
+    background: white;
+    padding: 30px 20px;
+    text-align: center;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.category-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.category-card h3 {
+    color: #333;
+    font-size: 16px;
+}
+
+/* Deals Section */
+.deals {
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.deals-header {
+    background: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.timer {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.time-box {
+    background: #333;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.product-card {
+    background: white;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: all 0.3s;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.product-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    background: #f8f8f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.discount-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #ff6b6b;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.product-info {
+    padding: 15px;
+}
+
+.product-info h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.stars {
+    color: #ffa500;
+}
+
+.reviews {
+    color: #666;
+    font-size: 12px;
+}
+
+.price {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.current-price {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.original-price {
+    text-decoration: line-through;
+    color: #999;
+    font-size: 16px;
+}
+
+.discount {
+    color: #388e3c;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.add-to-cart {
+    width: 100%;
+    padding: 12px;
+    background: #ff9f00;
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.add-to-cart:hover {
+    background: #e68a00;
+}
+
+/* Features */
+.features {
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 40px 20px;
+    background: white;
+    border-radius: 4px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.feature {
+    text-align: center;
+}
+
+.feature-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+    color: #2874f0;
+}
+
+.feature h3 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.feature p {
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Footer */
+.footer {
+    background: #172337;
+    color: white;
+    padding: 40px 20px 20px;
+    margin-top: 40px;
+}
+
+.footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.footer-section h4 {
+    margin-bottom: 15px;
+    color: #ffe500;
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section ul li {
+    margin-bottom: 8px;
+}
+
+.footer-section ul li a {
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-section ul li a:hover {
+    color: white;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid #444;
+    color: #999;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .nav-container {
+        flex-wrap: wrap;
+    }
+    
+    .search-bar {
+        order: 3;
+        flex-basis: 100%;
+        margin-top: 10px;
+    }
+    
+    .hero-slider {
+        height: 300px;
+    }
+    
+    .slide-content h2 {
+        font-size: 32px;
+    }
+    
+    .slide-content p {
+        font-size: 18px;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.product-card {
+    animation: fadeIn 0.5s ease-out;
+}
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="logo">Electro<span>World</span></div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search for products, brands and more...">
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="price.html">Products</a></li>
+            <li><a href="update.html">New Arrivals</a></li>
+            <li><a href="login.html">Login</a></li>
+        </ul>
+        <button class="cart-btn" onclick="alert('Cart feature coming soon!')">🛒 Cart</button>
+    </div>
+</nav>
+
+<!-- Hero Slider -->
+<div class="hero-slider">
+    <div class="slider-container" id="sliderContainer">
+        <div class="slide">
+            <div class="slide-content">
+                <h2>🎮 Gaming Laptops</h2>
+                <p>Up to 40% OFF on Premium Gaming Devices</p>
+                <button class="shop-now-btn" onclick="window.location.href='price.html'">Shop Now</button>
+            </div>
+        </div>
+        <div class="slide">
+            <div class="slide-content">
+                <h2>📱 Latest Smartphones</h2>
+                <p>Biggest Deals on 5G Smartphones</p>
+                <button class="shop-now-btn" onclick="window.location.href='price.html'">Shop Now</button>
+            </div>
+        </div>
+        <div class="slide">
+            <div class="slide-content">
+                <h2>⌚ Smart Wearables</h2>
+                <p>Track Your Fitness, Starting at ₹2,999</p>
+                <button class="shop-now-btn" onclick="window.location.href='price.html'">Shop Now</button>
+            </div>
+        </div>
+    </div>
+    <div class="slider-nav">
+        <div class="slider-dot active" onclick="goToSlide(0)"></div>
+        <div class="slider-dot" onclick="goToSlide(1)"></div>
+        <div class="slider-dot" onclick="goToSlide(2)"></div>
+    </div>
+</div>
+
+<!-- Categories -->
+<section class="categories">
+    <h2 class="section-title">Shop by Category</h2>
+    <div class="category-grid">
+        <div class="category-card" onclick="filterCategory('mobiles')">
+            <div class="category-icon">📱</div>
+            <h3>Mobiles</h3>
+        </div>
+        <div class="category-card" onclick="filterCategory('laptops')">
+            <div class="category-icon">💻</div>
+            <h3>Laptops</h3>
+        </div>
+        <div class="category-card" onclick="filterCategory('watches')">
+            <div class="category-icon">⌚</div>
+            <h3>Smartwatches</h3>
+        </div>
+        <div class="category-card" onclick="filterCategory('tablets')">
+            <div class="category-icon">📲</div>
+            <h3>Tablets</h3>
+        </div>
+        <div class="category-card" onclick="filterCategory('audio')">
+            <div class="category-icon">🎧</div>
+            <h3>Audio</h3>
+        </div>
+        <div class="category-card" onclick="filterCategory('cameras')">
+            <div class="category-icon">📷</div>
+            <h3>Cameras</h3>
+        </div>
+    </div>
+</section>
+
+<!-- Deals of the Day -->
+<section class="deals">
+    <div class="deals-header">
+        <h2 class="section-title" style="margin: 0;">⚡ Deals of the Day</h2>
+        <div class="timer">
+            <span>Ends in:</span>
+            <div class="time-box" id="hours">00</div>
+            <span>:</span>
+            <div class="time-box" id="minutes">00</div>
+            <span>:</span>
+            <div class="time-box" id="seconds">00</div>
+        </div>
+    </div>
+    
+    <div class="product-grid">
+        <div class="product-card">
+            <div class="product-image">
+                <div class="discount-badge">35% OFF</div>
+                <div style="font-size: 80px;">📱</div>
+            </div>
+            <div class="product-info">
+                <h3>iPhone 15 Pro Max</h3>
+                <div class="rating">
+                    <span class="stars">★★★★★</span>
+                    <span class="reviews">(2,845)</span>
+                </div>
+                <div class="price">
+                    <span class="current-price">₹89,999</span>
+                    <span class="original-price">₹1,39,999</span>
+                    <span class="discount">35% off</span>
+                </div>
+                <button class="add-to-cart" onclick="addToCart('iPhone 15 Pro Max')">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image">
+                <div class="discount-badge">25% OFF</div>
+                <div style="font-size: 80px;">💻</div>
+            </div>
+            <div class="product-info">
+                <h3>ASUS Zenbook Duo</h3>
+                <div class="rating">
+                    <span class="stars">★★★★☆</span>
+                    <span class="reviews">(1,234)</span>
+                </div>
+                <div class="price">
+                    <span class="current-price">₹84,000</span>
+                    <span class="original-price">₹1,12,000</span>
+                    <span class="discount">25% off</span>
+                </div>
+                <button class="add-to-cart" onclick="addToCart('ASUS Zenbook Duo')">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image">
+                <div class="discount-badge">40% OFF</div>
+                <div style="font-size: 80px;">⌚</div>
+            </div>
+            <div class="product-info">
+                <h3>Noise Endeavour Pro</h3>
+                <div class="rating">
+                    <span class="stars">★★★★☆</span>
+                    <span class="reviews">(3,567)</span>
+                </div>
+                <div class="price">
+                    <span class="current-price">₹5,699</span>
+                    <span class="original-price">₹9,499</span>
+                    <span class="discount">40% off</span>
+                </div>
+                <button class="add-to-cart" onclick="addToCart('Noise Endeavour Pro')">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image">
+                <div class="discount-badge">30% OFF</div>
+                <div style="font-size: 80px;">📲</div>
+            </div>
+            <div class="product-info">
+                <h3>Samsung Galaxy Tab S9</h3>
+                <div class="rating">
+                    <span class="stars">★★★★★</span>
+                    <span class="reviews">(987)</span>
+                </div>
+                <div class="price">
+                    <span class="current-price">₹48,999</span>
+                    <span class="original-price">₹69,999</span>
+                    <span class="discount">30% off</span>
+                </div>
+                <button class="add-to-cart" onclick="addToCart('Samsung Galaxy Tab S9')">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features -->
+<section class="features">
+    <div class="feature">
+        <div class="feature-icon">🚚</div>
+        <h3>Free Delivery</h3>
+        <p>Free shipping on orders above ₹499</p>
+    </div>
+    <div class="feature">
+        <div class="feature-icon">💳</div>
+        <h3>Secure Payment</h3>
+        <p>100% secure payment methods</p>
+    </div>
+    <div class="feature">
+        <div class="feature-icon">🔄</div>
+        <h3>Easy Returns</h3>
+        <p>7 days replacement policy</p>
+    </div>
+    <div class="feature">
+        <div class="feature-icon">🎧</div>
+        <h3>24/7 Support</h3>
+        <p>Dedicated customer support</p>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>About</h4>
+            <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Press</a></li>
+                <li><a href="#">Corporate</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Help</h4>
+            <ul>
+                <li><a href="#">Payments</a></li>
+                <li><a href="#">Shipping</a></li>
+                <li><a href="#">Cancellation</a></li>
+                <li><a href="#">FAQ</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Policy</h4>
+            <ul>
+                <li><a href="#">Return Policy</a></li>
+                <li><a href="#">Terms Of Use</a></li>
+                <li><a href="#">Security</a></li>
+                <li><a href="#">Privacy</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Social</h4>
+            <ul>
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">Twitter</a></li>
+                <li><a href="#">Instagram</a></li>
+                <li><a href="#">YouTube</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 ElectroWorld. All rights reserved.</p>
+    </div>
+</footer>
+
+<script>
+// Slider functionality
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.slider-dot');
+
+function goToSlide(n) {
+    currentSlide = n;
+    const offset = -currentSlide * 100;
+    document.getElementById('sliderContainer').style.transform = `translateX(${offset}%)`;
+    
+    dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentSlide);
+    });
+}
+
+// Auto-advance slider
+setInterval(() => {
+    currentSlide = (currentSlide + 1) % slides.length;
+    goToSlide(currentSlide);
+}, 5000);
+
+// Countdown timer
+function updateTimer() {
+    const now = new Date();
+    const midnight = new Date();
+    midnight.setHours(24, 0, 0, 0);
+    
+    const diff = midnight - now;
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    
+    document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+    document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+    document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+}
+
+setInterval(updateTimer, 1000);
+updateTimer();
+
+// Add to cart function
+function addToCart(productName) {
+    alert(`✅ ${productName} added to cart!`);
+}
+
+// Filter category function
+function filterCategory(category) {
+    alert(`Showing ${category} products...`);
+    window.location.href = 'price.html';
+}
+</script>
+
+</body>
+</html>
